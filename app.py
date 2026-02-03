@@ -1,11 +1,17 @@
+# =====================================================
+# FORCE CPU ONLY (VERY IMPORTANT FOR RENDER)
+# =====================================================
+import os
+os.environ["CUDA_VISIBLE_DEVICES"] = "-1"
+
 from fastapi import FastAPI, UploadFile, File
 from ultralytics import YOLO
 from PIL import Image
 import io
 
-# =====================================
-# LOAD MODEL
-# =====================================
+# =====================================================
+# LOAD YOLOv8 MODEL
+# =====================================================
 MODEL_PATH = "best.pt"
 model = YOLO(MODEL_PATH)
 
@@ -13,16 +19,16 @@ CLASS_NAMES = model.names  # {0: 'paregi', 1: 'pelise'}
 IMG_SIZE = 640
 CONF_THRESH = 0.15
 
-print("✅ YOLOv8 model loaded")
+print("✅ YOLOv8 model loaded (CPU)")
 
-# =====================================
+# =====================================================
 # FASTAPI APP
-# =====================================
+# =====================================================
 app = FastAPI(title="Paregi / Pelise YOLOv8 API")
 
-# =====================================
+# =====================================================
 # PREDICTION ENDPOINT
-# =====================================
+# =====================================================
 @app.post("/predict")
 async def predict(file: UploadFile = File(...)):
     image_bytes = await file.read()
@@ -32,6 +38,7 @@ async def predict(file: UploadFile = File(...)):
         source=image,
         imgsz=IMG_SIZE,
         conf=CONF_THRESH,
+        device="cpu",       # FORCE CPU
         verbose=False
     )
 
@@ -63,9 +70,9 @@ async def predict(file: UploadFile = File(...)):
         "probabilities": probs
     }
 
-# =====================================
+# =====================================================
 # HEALTH CHECK (RENDER NEEDS THIS)
-# =====================================
+# =====================================================
 @app.get("/")
 def health():
     return {"status": "ok"}

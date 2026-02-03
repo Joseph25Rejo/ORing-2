@@ -1,7 +1,14 @@
 fastapi
 uvicorn
-ultralytics
-torch
-opencv-python-headless
-pillow
 python-multipart
+pillow
+
+# CPU-only PyTorch (PINNED)
+torch==2.2.2
+torchvision==0.17.2
+
+# YOLOv8 (PINNED & STABLE)
+ultralytics==8.1.34
+
+# Headless OpenCV (NO GUI, NO libGL)
+opencv-python-headless
