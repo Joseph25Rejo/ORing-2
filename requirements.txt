@@ -3,12 +3,12 @@ uvicorn
 python-multipart
 pillow
 
-# Python 3.13 compatible Torch (CPU)
-torch>=2.5.0
-torchvision>=0.20.0
+# CPU-only PyTorch (SAFE on Python 3.10)
+torch==2.2.2
+torchvision==0.17.2
 
-# YOLOv8
-ultralytics
+# YOLOv8 (stable)
+ultralytics==8.1.34
 
-# Headless OpenCV (NO GUI)
+# Headless OpenCV only
 opencv-python-headless
