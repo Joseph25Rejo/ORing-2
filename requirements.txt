@@ -3,13 +3,16 @@ uvicorn
 python-multipart
 pillow
 
-# ---- FORCE CPU-ONLY TORCH ----
+# 🔒 NumPy compatibility (CRITICAL)
+numpy<2.0
+
+# 🔒 CPU-only PyTorch
 --extra-index-url https://download.pytorch.org/whl/cpu
 torch==2.2.2
 torchvision==0.17.2
 
-# YOLOv8
+# 🔒 YOLOv8 (stable)
 ultralytics==8.1.34
 
-# Headless OpenCV
+# Headless OpenCV (no libGL issues)
 opencv-python-headless
